@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: whitesmoke;
+    font-family: 'Josefin sans';
+}
+
+h1{
+    margin-bottom: 30px;
+    font-size:40px;
+    
+}
+
+#form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top:150px;
+    padding: 2rem 0;
+}
+
+form input{
+    padding: 15px 0px 15px 10px;
+    font-size: 20px;
+    border: 2px solid gray;
+    outline: none;
+    border-radius: 40px;
+    margin: 15px 0;
+    font-family: Josefin sans;
+    color: rgb(146, 137, 137);
+}
+
+form input::placeholder{
+    font-size:20px ;
+    font-weight: bold;
+    padding-left: 10px;
+    font-family: Josefin sans;
+}
+
+.buttons button{
+    margin: 10px;
+    padding: 15px ;
+    font-size: large;
+    outline: grey;
+    border: 2px solid lightgray;
+    border-radius: 40px;
+}
+
+.buttons button:hover{
+    background-color: lightsteelblue;
+    cursor: pointer;
+}
