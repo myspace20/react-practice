@@ -1,28 +1,23 @@
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useSignUp } from '../hooks/useSignUp'
 import './Login.css'
 
 
 export default function SignUp() {
 
-  const history = useHistory()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { signup, error } = useSignUp()
 
   const handleSubmit = (e) =>{
     e.preventDefault()
 
-    const userSignUp = {
-      name,email, password
-    }
-    setEmail('')
-    setPassword('')
+    signup(name,email, password)
+    
 
-    history.push('/')
-
-    console.log(userSignUp)
+   
   }
 
   return (
@@ -35,6 +30,7 @@ export default function SignUp() {
             <div className='buttons'>
                 <button onClick={handleSubmit}>Sign Up</button>
             </div>
+            {error && <p>{ error.message }</p>}
       </form>
     </div>
   )

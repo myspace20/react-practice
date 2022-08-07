@@ -1,0 +1,27 @@
+.container{
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.not-found{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.not-found p{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.not-found a{
+  text-decoration: none;
+  border: 1px solid gray;
+  border-radius: 30px ;
+  padding: 20px;
+  margin:20px;
+}
+

@@ -1,31 +1,26 @@
 import { useState } from 'react'
 import { NavLink, useHistory} from 'react-router-dom'
 import './Login.css'
+import { useLogin } from '../hooks/useLogin'
+
+
 
 export default function Login() {
 
-  const history = useHistory()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { login, error} = useLogin()
 
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    const user = {
-      email, password
-    }
-    setEmail('')
-    setPassword('')
-    if(user){
-      history.push('/dashboard')
-    }
-
-    console.log(user, e)
+    login(email, password)
+    
+   
   }
 
   return (
-    <div className='container'>
+    <div className='container'  >
       <form id='form'>
             <h1>My Quiz</h1>
             <input placeholder='email' onChange={(e)=>setEmail(e.target.value)} name='email' type='email'/>
@@ -36,6 +31,7 @@ export default function Login() {
                   <button>Sign Up</button>
                 </NavLink>
             </div>
+            {error && <p>{error.message}</p>}
       </form>
     </div>
   )

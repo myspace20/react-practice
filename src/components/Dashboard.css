@@ -8,7 +8,7 @@
 }
 
 .dashboard h1{
-    color: lightsteelblue;
+    color: grey;
 }
 
 .dashboard button{
@@ -18,25 +18,39 @@
     outline: grey;
 }
 
-.dashboard h2{
+.dashboard h1{
     padding: 15px 0px;
 }
 
 .cards{
-    padding: 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .card{
+    background: #f46b45;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 200px;
+    border-radius: 20px;
+    text-align: center;
     padding: 20px;
-    height: 100px;
-    border: 2px solid grey;
-    margin: 10px 0px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 70%;
-    margin-right: auto;
+    margin: 20px;
+    font-size: large;
+    width: 90%;
+}
+
+.card h2{
+    color: aliceblue;
+    font-size: 40px;
+}
+
+@media screen and (min-width:680px){
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+    }
 }
 
