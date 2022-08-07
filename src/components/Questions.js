@@ -13,10 +13,7 @@ export default function Questions() {
 
   //states
   const [answer, setAnswer] = useState([])
-  const [score, setScore] = useState([])
-  const [questions, setQuestions] = useState()
-  const [correctAnswer, setCorrectAnswer] = useState([])
-  const [answserdata, setAnswserData] = useState([])
+  const [score, setScore] = useState('')
   const [showScore, setShowScore] = useState(false)
   const [url, setUrl] = useState('http://localhost:3000/results')
   
@@ -92,7 +89,6 @@ const handleSubmit = async (e) =>{
     score: score
   })
 
-  setScore('')
 }
   
   return (
