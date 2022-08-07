@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react"
 import {useFetch} from "../hooks/useFetch"
 import { db } from "../firebase/config"
-import { setDoc } from "firebase/firestore"
+import { collection, addDoc } from "firebase/firestore"
 
 
 
@@ -69,7 +69,7 @@ export default function Questions() {
 
 
 //submitting answers and adding score
-const handleSubmit = (e) =>{
+const handleSubmit = async (e) =>{
   e.preventDefault()
   data.forEach((element, index )=> {
 
@@ -85,6 +85,14 @@ const handleSubmit = (e) =>{
     setShowScore(true)
     
   });
+
+  const ref = collection(db, 'scores')
+
+  await addDoc(ref,{
+    score: score
+  })
+
+  setScore('')
 }
   
   return (
