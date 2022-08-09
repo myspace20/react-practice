@@ -2,20 +2,40 @@ import './Dashboard.css'
 import { useHistory } from 'react-router-dom'
 import {auth} from '../firebase/config'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import {  useState } from 'react'
+import {  useState, useEffect } from 'react'
+import { db } from '../firebase/config'
+import { collection, onSnapshot } from 'firebase/firestore'
 
 
 export default function Dashboard() {
 
   const [user, setUser] = useState(null)
+  const [scores, setScores] = useState(null)
 
 
-    const unsub = onAuthStateChanged(auth, (user)=>{
+    onAuthStateChanged(auth, (user)=>{
       if(user){
         setUser(user)
       }
     
     })
+
+    useEffect(()=>{
+      const ref = collection(db, 'scores')
+
+      const unsub = onSnapshot(ref, (snapShot)=>{
+        let results = []
+
+        snapShot.docs.forEach(doc =>{
+          results.push({...doc.data(), id: doc.id})
+        })
+
+        setScores(results)
+      })
+
+      return () => unsub
+
+    },[])
   
 
     const handleLogout = () =>{
@@ -50,18 +70,11 @@ console.log(user)
         </button>
         <h1>Previous Scores</h1>
         <div className='cards'>
-            <div className='card'>
-                <h2>Score:</h2>
-                <p>Time Elapsed:</p>
-            </div>
-            <div className='card'>
-                <h2>Score:</h2>
-                <p>Time Elapsed:</p>
-            </div>
-            <div className='card'>
-                <h2>Score:</h2>
-                <p>Time Elapsed:</p>
-            </div>
+            {scores && scores.map(score =>(
+              <div className='card' key={score.id}>
+              <h2>{score.score}</h2>
+          </div>
+            ))}
         </div>
     </div>
   )
