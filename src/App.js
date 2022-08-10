@@ -6,16 +6,11 @@ import Dashboard from './components/Dashboard';
 import Questions from './components/Questions';
 import { useAuthContext } from './hooks/useAuthContext'
 import NotFound from './components/NotFound';
-import { useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from "./firebase/config"
+import { useOnAuthStateChanged } from './hooks/useOnAuthStateChanged'
+
 function App() {
 
-  const [user, setUser ] = useState(null)
-
-  onAuthStateChanged(auth, (user)=>{
-    setUser(user)
-  })
+ const { user } = useOnAuthStateChanged()
 
   const { authIsReady } = useAuthContext()
  

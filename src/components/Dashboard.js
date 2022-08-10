@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   const [scores, setScores] = useState(null)
 
-  const { user, setUser } = useOnAuthStateChanged()
+  const { user } = useOnAuthStateChanged()
 
     useEffect(()=>{
       const ref = collection(db, 'scores')
@@ -35,8 +35,6 @@ export default function Dashboard() {
 
     const handleLogout = () =>{
       signOut(auth).then(()=>{
-        setUser(null)
-      }).then(()=>{
         history.push('/')
         console.log(user)
       })
