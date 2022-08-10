@@ -4,6 +4,11 @@
   padding: 10px 0px 0px 0px;
 }
 
+.heading h1{
+  font-size: 40px;
+  font-weight: bolder;
+}
+
 .questions {
   padding: 10px -10px;
   background-color:#DD6E42;

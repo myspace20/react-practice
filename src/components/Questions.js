@@ -1,5 +1,5 @@
-import { useState, useEffect} from "react"
-import {useFetch} from "../hooks/useFetch"
+import { useState } from "react"
+import { useFetch } from '../hooks/useFetch'
 import { db } from "../firebase/config"
 import { collection, addDoc } from "firebase/firestore"
 
@@ -18,27 +18,11 @@ export default function Questions() {
   const [url, setUrl] = useState('http://localhost:3000/results')
   
 
-  const { data,time } = useFetch(url)
+  const { data } = useFetch(url)
 
   let qid = 1
   let scoreValue = 0
 
-
-  // const timer = setInterval(()=>{
-  //   let date = new Date()
-  //   let seconds = date.getMinutes() * 60 + date.getSeconds()
-  //   let twoMinutes = 60 * 2
-
-  //   let timeLeft = twoMinutes - seconds % twoMinutes
-
-  //   let countDown = parseInt(timeLeft/60) + ':' + timeLeft % 60
-
-  //   setTime(countDown)
-
-  // }, 1000)
-
-
-// console.log(data)
 
   
  //getting user input(answers)
@@ -51,32 +35,18 @@ export default function Questions() {
     })
   }
 
-  // console.log(answer)
-
-  //fetching and adding quesions
-  // useEffect(() =>{
-  //   fetch('http://localhost:3000/results')
-  //   .then(res => res.json())
-  //   .then(data => setQuestions(data))
-  //   .catch((err)=>{
-  //     alert(err.message)
-  //   })
-  // },[])
-
-
+  
 
 //submitting answers and adding score
 const handleSubmit = async (e) =>{
   e.preventDefault()
   data.forEach((element, index )=> {
 
-    console.log(element.correct_answer, index)
-    
-
+  
     if(element.correct_answer ===answer[index]){
       scoreValue += 10
       setScore(scoreValue)
-      console.log(scoreValue)
+      
     }
     setScore(scoreValue)
     setShowScore(true)
@@ -102,7 +72,9 @@ const handleSubmit = async (e) =>{
             </div>
         </div>
       </div>}
-      {data && <div>{time}</div>}
+       <div className="heading">
+        <h1>Questions</h1>
+       </div>
       {data && data.map((question_data, id) =>(
         <div key={id}  className="question">
           <p dangerouslySetInnerHTML={{__html:`${qid}. ${question_data.question}`}}></p>

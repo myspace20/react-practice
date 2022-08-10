@@ -1,24 +1,19 @@
 import './Dashboard.css'
 import { useHistory } from 'react-router-dom'
 import {auth} from '../firebase/config'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import {  useState, useEffect } from 'react'
 import { db } from '../firebase/config'
-import { collection, onSnapshot } from 'firebase/firestore'
+import { collection,onSnapshot } from 'firebase/firestore'
+import { useOnAuthStateChanged } from '../hooks/useOnAuthStateChanged'
+
 
 
 export default function Dashboard() {
 
-  const [user, setUser] = useState(null)
   const [scores, setScores] = useState(null)
 
-
-    onAuthStateChanged(auth, (user)=>{
-      if(user){
-        setUser(user)
-      }
-    
-    })
+  const { user, setUser } = useOnAuthStateChanged()
 
     useEffect(()=>{
       const ref = collection(db, 'scores')
@@ -70,9 +65,9 @@ console.log(user)
         </button>
         <h1>Previous Scores</h1>
         <div className='cards'>
-            {scores && scores.map(score =>(
-              <div className='card' key={score.id}>
-              <h2>{score.score}</h2>
+            {scores && scores.map(doc =>(
+              <div className='card' key={doc.id}>
+              <h2>{doc.score}</h2>
           </div>
             ))}
         </div>
