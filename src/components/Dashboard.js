@@ -2,49 +2,27 @@ import './Dashboard.css'
 import { useHistory } from 'react-router-dom'
 import {auth} from '../firebase/config'
 import { signOut } from 'firebase/auth'
-import {  useState, useEffect } from 'react'
-import { db } from '../firebase/config'
-import { collection,onSnapshot } from 'firebase/firestore'
-import { useOnAuthStateChanged } from '../hooks/useOnAuthStateChanged'
+import { useCollection } from '../hooks/useCollection'
+
+import { useAuthContext } from '../hooks/useAuthContext'
 
 
 
 export default function Dashboard() {
 
-  const [scores, setScores] = useState(null)
+  const { user } = useAuthContext()
 
-  const { user } = useOnAuthStateChanged()
+  const { scores } = useCollection('scores',
+    ["id", "==", user.uid]
+  )
 
-    useEffect(()=>{
-      const ref = collection(db, 'scores')
-
-      const unsub = onSnapshot(ref, (snapShot)=>{
-        let results = []
-
-        snapShot.docs.forEach(doc =>{
-          results.push({...doc.data(), id: doc.id})
-        })
-
-        setScores(results)
-      })
-
-      return () => unsub
-
-    },[])
-  
 
     const handleLogout = () =>{
       signOut(auth).then(()=>{
         history.push('/')
-        console.log(user)
       })
-      
     }
-    
   
-
- 
-console.log(user)
 
   const history = useHistory()
 
@@ -56,18 +34,28 @@ console.log(user)
   return (
     <div className='dashboard'>
       <h1>Dashboard</h1>
-      {user && <h2>Welcome,{user.displayName}</h2>}
-      <button onClick={handleLogout}>Log out</button>
+      <div className='welcome'>
+        {user && <h2>Hello,  <span>{user.displayName}</span></h2>}
+        <img src="https://img.icons8.com/office/60/000000/so-so.png"/>
+      </div>
         <button onClick={handleClick}>
             Take a test
         </button>
         <h1>Previous Scores</h1>
         <div className='cards'>
             {scores && scores.map(doc =>(
-              <div className='card' key={doc.id}>
+              <div className='card' key={doc.index}>
               <h2>{doc.score}</h2>
+              <h3>{doc.time}</h3>
+              <h3>{doc.date}</h3>
           </div>
             ))}
+            {!scores && <div>
+              <h1>No scores to display</h1>
+            </div>}
+        </div>
+        <div className='logout'>
+          <button  onClick={handleLogout}>Log out</button>
         </div>
     </div>
   )
